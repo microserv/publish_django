@@ -48,7 +48,7 @@ def article(request):
 @csrf_exempt
 def article_json(request):
 	try:
-		if (request.method == "POST"):
+		if (request.method == "GET"):
 			id = request.path[-24:]
 			doc = collection.find_one({'_id': ObjectId(id)})
 			res = {"title": doc["title"], "description": doc["description"], "article": doc["article"], "tags": doc["tags"]}
