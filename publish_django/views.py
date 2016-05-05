@@ -8,7 +8,7 @@ import json
 from bson.objectid import ObjectId
 
 mongodb_url = "mongodb://despina.128.no//IT2901"
-indexer_url = "http://127.0.0.1:8001"
+indexer_url = "http://despina.128.no/indexer"
 
 client = MongoClient(mongodb_url)
 db = client["IT2901"]
