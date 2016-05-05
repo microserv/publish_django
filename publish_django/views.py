@@ -7,7 +7,7 @@ import requests
 import json
 from bson.objectid import ObjectId
 
-mongodb_url = "mongodb://127.0.0.1:27017/"
+mongodb_url = "mongodb://despina.128.no//IT2901"
 indexer_url = "http://127.0.0.1:8001"
 
 client = MongoClient(mongodb_url)
