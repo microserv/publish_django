@@ -3,7 +3,7 @@
 
 
 
-Publishing microservise API documentation.
+## Publishing microservise API documentation.
 
 The fields: article, title, tags, and description are all text fields.
 Their content does not matter to, and is not checked by, the publishing microservise.
@@ -11,6 +11,8 @@ Their content does not matter to, and is not checked by, the publishing microser
 The id field is a 24 character long lowercase hex string.
 It is stored as a text field.
 
+
+### save article
 
 request:
 A POST request to /save_article
@@ -34,6 +36,8 @@ If the request was unsuccessful:
 An Http response with status code 500.
 
 
+### list
+
 request:
 A GET request to /list
 
@@ -51,6 +55,8 @@ each should have the fields: title, description, id.
 If the request was unsuccessful:
 An Http response with status code 500.
 
+
+### article
 
 request:
 A GET request to /article/<id>
@@ -72,6 +78,8 @@ If the request was unsuccessful:
 An Http response with status code 500.
 
 
+### article json
+
 request:
 A GET request to /article_json/<id>
 
@@ -91,6 +99,8 @@ A JSON object with the fields: title, description, article, tags.
 If the request was unsuccessful:
 An Http response with status code 500.
 
+
+### delete article
 
 request:
 A DELETE request to /article_json/<id>
