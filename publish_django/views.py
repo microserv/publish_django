@@ -51,7 +51,7 @@ def article_json(request):
 		if (request.method == "GET"):
 			id = request.path[-24:]
 			doc = collection.find_one({'_id': ObjectId(id)})
-			res = {"title": doc["title"], "description": doc["description"], "article": doc["article"], "tags": doc["tags"]}
+			res = {"title": doc["title"], "description": doc["description"], "article": doc["article"], "tags": doc["tags"], "_id": doc["_id"]}
 			return HttpResponse(json.dumps(res))
 		elif (request.method == "DELETE"):
 			id = request.path[-24:]
