@@ -7,11 +7,21 @@ import requests
 import json
 from bson.objectid import ObjectId
 
-mongodb_url = "mongodb://despina.128.no//IT2901"
-indexer_url = "http://despina.128.no/indexer"
+
+NODE_ADDR = "http://127.0.0.1:9001"
+DB_NAME = "IT2901"
+
+def get_service_ip(service_name):
+    response_as_json = None
+    r = requests.get(NODE_ADDR + "/" + service_name)
+
+    return json.loads(r.text)
+
+mongodb_url = "mongodb://" + get_service_ip("mongodb") + "/" + DB_NAME
+indexer_url = "http://" + get_service_ip("indexer")
 
 client = MongoClient(mongodb_url)
-db = client["IT2901"]
+db = client[DB_NAME]
 collection = db["publishing"]
 
 @csrf_exempt
