@@ -25,6 +25,10 @@ db = client[DB_NAME]
 collection = db["publishing"]
 
 @csrf_exempt
+def success(request):
+            return HttpResponse(status=200)
+
+@csrf_exempt
 def save_article(request):
 	try:
 		r = str(collection.insert_one(request.POST.dict()).inserted_id)

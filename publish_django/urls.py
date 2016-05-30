@@ -18,6 +18,7 @@ from django.contrib import admin
 from publish_django.views import save_article
 from publish_django.views import list
 from publish_django.views import article
+from publish_django.views import success
 from publish_django.views import article_json
 
 urlpatterns = [
@@ -25,4 +26,7 @@ urlpatterns = [
 	url(r'^list', list),
 	url(r'^article_json/*', article_json),
 	url(r'^article/*', article),
+	url(r'^authorize_me', success),
+	url(r'^authorize_me/', success),
+	url(r'^connect/*', success),
 ]

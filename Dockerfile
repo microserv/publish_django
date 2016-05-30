@@ -21,5 +21,6 @@ RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
 RUN rm -rf /run && mkdir -p /run/nginx
+ENV SERVICE_NAME publishing
 
 EXPOSE 80
