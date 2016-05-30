@@ -11,28 +11,31 @@ from bson.objectid import ObjectId
 NODE_ADDR = "http://127.0.0.1:9001"
 DB_NAME = "IT2901"
 
+def get_collection(collection_name):
+	mongodb_url = "mongodb://" + get_service_ip("mongodb") + "/" + DB_NAME
+
+	client = MongoClient(mongodb_url)
+	db = client[DB_NAME]
+	return db[collection_name]
+
 def get_service_ip(service_name):
-    response_as_json = None
-    r = requests.get(NODE_ADDR + "/" + service_name)
+	response_as_json = None
+	r = requests.get(NODE_ADDR + "/" + service_name)
 
-    return json.loads(r.text)
+	return json.loads(r.text)
 
-mongodb_url = "mongodb://" + get_service_ip("mongodb") + "/" + DB_NAME
-indexer_url = "http://" + get_service_ip("indexer")
-
-client = MongoClient(mongodb_url)
-db = client[DB_NAME]
-collection = db["publishing"]
 
 @csrf_exempt
 def success(request):
-            return HttpResponse(status=200)
+	return HttpResponse(status=200)
 
 @csrf_exempt
 def save_article(request):
+	collection = get_collection("publishing")
 	try:
 		r = str(collection.insert_one(request.POST.dict()).inserted_id)
 		try:
+			indexer_url = "http://" + get_service_ip("indexer")
 			requests.post("indexer_url", data = {"task" : "publishedArticle" , "articleID" : r})
 		except:
 			print("Could not update indexer.")
@@ -42,6 +45,7 @@ def save_article(request):
 
 @csrf_exempt
 def list(request):
+	collection = get_collection("publishing")
 	try:
 		art_list = []
 		for art in collection.find():
@@ -52,6 +56,7 @@ def list(request):
 
 @csrf_exempt
 def article(request):
+	collection = get_collection("publishing")
 	try:
 		id = request.path[-24:]
 		doc = collection.find_one({'_id': ObjectId(id)})
@@ -61,6 +66,7 @@ def article(request):
 
 @csrf_exempt
 def article_json(request):
+	collection = get_collection("publishing")
 	try:
 		if (request.method == "GET"):
 			id = request.path[-24:]
@@ -71,6 +77,7 @@ def article_json(request):
 			id = request.path[-24:]
 			collection.delete_one({'_id': ObjectId(id)})
 			try:
+				indexer_url = "http://" + get_service_ip("indexer")
 				requests.post("indexer_url", data = {"task" : "removedArticle" , "articleID" : id})
 			except:
 				print("Could not update indexer.")
